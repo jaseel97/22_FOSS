@@ -2,9 +2,9 @@
 clear
 sleep 2
 echo "Hello There $USER !!!"
-sleep 2
+sleep 1
 clear
-sleep 2
+sleep 1
 echo "I am Bash. B-)"
 clear
-sleep 2
+sleep 1
