@@ -6,7 +6,6 @@ print "Enter search key\n";
 $k = <STDIN>;
 chop $k;
 while ($a[$i] ne ""){
-	#print ".\n";
 	if ($f = $k == $a[$i]){
 		print "$k at position ".($i+1)."\n";
 		last;	
