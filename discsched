@@ -1,0 +1,86 @@
+#include<stdio.h>
+#include<math.h>
+
+void main(){
+
+        int req[20],start,end,n,i,j,tot=0;
+        float avg;
+
+        printf("Enter number of requests : ");
+        scanf("%d",&n);
+
+        printf("Enter the work queue items\n");
+        for(i=0;i<n;i++){
+                printf("req%d : ",i+1);
+                scanf("%d",&req[i]);
+        }
+
+        printf("Enter the current disk head position : ");
+        scanf("%d",&start);
+
+        printf("Enter last cylinder number : ");
+        scanf("%d",&end);
+
+        int newar[n+3];
+
+        int prev,seek,temp,pos;
+        int ch;
+        do{
+                printf("\tMENU\n");
+                printf("1. FCFS\n2. SCAN\n3. C-SCAN\n4. EXIT\n");
+                scanf("%d",&ch);
+
+                switch(ch){
+                        case 1:
+                        tot=0;
+                        prev = start;
+                        for(i=0;i<n;i++){
+                                printf("%d -> %d\n",prev,req[i]);
+                                seek = abs(prev-req[i]);
+                                tot+=seek;
+                                prev=req[i];
+                        }
+                        avg=(float)tot/n;
+                        printf("Total Seek Distance : %d Cylinders\n",tot);
+                        printf("Average Seek        : %.2f Cylinders\n",avg);
+                        break;
+
+                        case 2:
+                        newar[0]=0;
+                        newar[n+2]=end;
+                        for(i=0;i<n;i++){
+                                for(j=0;j<n-i-1;j++){
+                                        if(newar[j]>newar[j+1]){
+                                                temp=newar[j+1];
+                                                newar[j+1]=newar[j];
+                                                newar[j]=temp;
+                                        }
+                                }
+                        }
+                        pos=0;
+                        for(i=0;i<n;i++){
+                                if(req[i]<start){
+                                        newar[pos]=req[i-1];
+                                        pos++;
+                                }
+                        }
+                        newar[pos++]=start;
+                        for(i=0;i<n+2;i++){
+                                if(req[i]>start){
+                                        newar[pos++]=req[i];
+                                }
+                        }
+                        for(i=0;i<n+3;i++){
+                                printf("%d ",newar[i]);
+                        }
+                        printf("\n");
+                        break;
+
+                        case 3:
+                        break;
+
+                        case 4:
+                        break;
+                }
+        }while(ch<=3&&ch>=1);
+}
