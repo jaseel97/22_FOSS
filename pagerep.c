@@ -75,18 +75,133 @@ void main()
                         printf("Total Faults : %d",fault);
                         break;
                         case 2:
-                        printf("LRU\n");
-
+                        printf("\nLRU\n");
+						fault=0;
                         for(i=0;i<slot;i++)
-                                slots[i]=0;
+						{
+                                slots[i]=-1;
+								if(i<slot)
+									param[i]=0;
+						}
 
                         for(i=0;i<n;i++)
                         {
                                 int flag=0,iflag=0;
-                                for(j=0;j<
+                                for(j=0;j<slot;j++)
+								{
+										if(page[i]==slots[j])
+										{
+												flag=1;
+												param[j]=0;
+										}
+								}
+                                if(flag==0)
+                             	{
+                                		printf("%d Fault! New : ",page[i]);
+                                        fault++;
+										for(j=0;j<slot;j++)
+										{
+												if(slots[j]==-1)
+												{
+														iflag=1;
+														slots[j]=page[i];
+														//param[j]=1;
+														break;
+												}
+										}
+										
+										if(iflag==0)
+										{
+												int pos=0;
+												for(j=0;j<slot;j++)
+												{
+														//printf("\n%d>%d?\n",param[j],param[pos]);
+														if(param[j]>param[pos])
+																pos=j;
+												}
+												slots[pos]=page[i];
+												param[pos]=0;
+										}
+										
+
+										for(j=0;j<slot;j++)
+											printf("%d ",slots[j]);
+										printf("\n");
+												
+								}
+                                else
+                                        printf("%d No Fault!\n",page[i]);
+
+								for(j=0;j<slot;j++)
+								{
+											if(slots[j]!=-1)
+													param[j]++;
+								}
+
+						}	
+						printf("Total Faults : %d",fault);	
                         break;
+
                         case 3:
                         printf("LFU\n");
+                        fault=0;
+                        for(i=0;i<slot;i++)
+						{
+                                slots[i]=-1;
+								if(i<slot)
+									param[i]=0;
+						}
+
+                        for(i=0;i<n;i++)
+                        {
+                                int flag=0,iflag=0;
+                                for(j=0;j<slot;j++)
+								{
+										if(page[i]==slots[j])
+										{
+												flag=1;
+												param[j]++;
+										}
+								}
+                                if(flag==0)
+                             	{
+                                		printf("%d Fault! New : ",page[i]);
+                                        fault++;
+										for(j=0;j<slot;j++)
+										{
+												if(slots[j]==-1)
+												{
+														iflag=1;
+														slots[j]=page[i];
+														break;
+												}
+										}
+										
+										if(iflag==0)
+										{
+												int pos=0;
+												for(j=0;j<slot;j++)
+												{
+														//printf("\n%d>%d?\n",param[j],param[pos]);
+														if(param[j]<param[pos])
+																pos=j;
+												}
+												slots[pos]=page[i];
+												param[pos]=0;
+												
+										}
+										
+
+										for(j=0;j<slot;j++)
+											printf("%d ",slots[j]);
+										printf("\n");
+												
+								}
+                                else
+                                        printf("%d No Fault!\n",page[i]);
+
+						}	
+						printf("Total Faults : %d",fault);	
                         break;
                         case 4:
                         break;
