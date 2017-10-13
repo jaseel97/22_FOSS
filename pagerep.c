@@ -48,7 +48,7 @@ void main()
                                         for(j=0;j<slot;j++)
                                         {
                                                 if(slots[j]==-1)
-                                                {
+                                                {//
                                                         slots[j]=page[i];
                                                         iflag=1;
                                                         break;
